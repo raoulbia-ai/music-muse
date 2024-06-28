@@ -22,9 +22,9 @@ Before setting up the project, ensure you have the following installed on your s
 ### Steps
 
 1. **Clone the repository**:
-    Replace `<repository-url>` with the actual URL of the repository.
+    
     ```sh
-    git clone <repository-url>
+    git clone https://github.com/raoulbia-ai/music-muse.git
     ```
 
 2. **Set up the frontend**:
