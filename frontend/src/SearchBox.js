@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import './index.css';
 
 const SearchBox = () => {
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [selectedSuggestion, setSelectedSuggestion] = useState(-1);
-  const [details, setDetails] = useState(null);
+  const [details, setDetails] = useState([]);
 
   useEffect(() => {
     if (query.length > 0) {
@@ -15,20 +16,60 @@ const SearchBox = () => {
   }, [query]);
 
   const fetchSuggestions = async (query) => {
-    const response = await fetch(`http://localhost:5000/api/suggestions?query=${query}`);
-    const data = await response.json();
-    setSuggestions(data);
+    try {
+      const response = await fetch(`http://localhost:5000/api/suggestions?query=${query}`);
+      const data = await response.json();
+      setSuggestions(data);
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+    }
+  };
+
+  const fetchAllArtists = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/all_artists`);
+      const data = await response.json();
+      setSuggestions(data);
+    } catch (error) {
+      console.error('Error fetching all artists:', error);
+    }
   };
 
   const fetchDetails = async (query) => {
-    const response = await fetch(`http://localhost:5000/api/details?query=${query}`);
-    const data = await response.json();
-    setDetails(data);
+    try {
+      const response = await fetch(`http://localhost:5000/api/details?query=${query}`);
+      const data = await response.json();
+      const formattedData = formatData(data);
+      setDetails(formattedData);
+    } catch (error) {
+      console.error('Error fetching details:', error);
+    }
+  };
+
+  const formatData = (artistData) => {
+    if (!artistData.albums) return [];
+    const results = [];
+    artistData.albums.forEach(album => {
+      const songList = album.songs.map(song => `<li>${song.title} (${song.length})</li>`).join('');
+      results.push({
+        artist: artistData.name,
+        album: album.title,
+        albumDescription: album.description,
+        songTitles: `<ul>${songList}</ul>`,
+      });
+    });
+    return results;
   };
 
   const handleChange = (e) => {
     setQuery(e.target.value);
-    setDetails(null); // Clear details when query changes
+    setDetails([]); // Clear details when query changes
+  };
+
+  const handleFocus = () => {
+    if (!query) {
+      fetchAllArtists();
+    }
   };
 
   const handleKeyDown = (e) => {
@@ -38,29 +79,33 @@ const SearchBox = () => {
       setSelectedSuggestion((prev) => (prev > 0 ? prev - 1 : 0));
     } else if (e.key === 'Enter' && selectedSuggestion >= 0) {
       const selected = suggestions[selectedSuggestion];
-      setQuery(selected);
+      setQuery('');
       setSuggestions([]);
+      setSelectedSuggestion(-1);
       fetchDetails(selected);
     }
   };
 
   const handleSuggestionClick = (suggestion) => {
-    setQuery(suggestion);
+    setQuery('');
     setSuggestions([]);
+    setSelectedSuggestion(-1);
     fetchDetails(suggestion);
   };
 
   return (
-    <div>
+    <div className="search-box">
       <input
         type="text"
         value={query}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
-        placeholder="Search..."
+        onFocus={handleFocus}
+        className="search-input"
+        placeholder="Type to Search by artist..."
       />
       {suggestions.length > 0 && (
-        <ul>
+        <ul className="suggestions-list">
           {suggestions.map((suggestion, index) => (
             <li
               key={index}
@@ -72,13 +117,37 @@ const SearchBox = () => {
           ))}
         </ul>
       )}
-      {details && (
-        <div>
-          <h2>Details</h2>
-          <pre>{JSON.stringify(details, null, 2)}</pre>
+      {details.length > 0 && (
+        <div className="details">
+          <ResultsTable details={details} />
         </div>
       )}
     </div>
+  );
+};
+
+const ResultsTable = ({ details }) => {
+  return (
+    <table className="results-table">
+      <thead>
+        <tr>
+          <th>Artist Name</th>
+          <th>Album Title</th>
+          <th>Album Description</th>
+          <th>Song Titles</th>
+        </tr>
+      </thead>
+      <tbody>
+        {details.map((detail, index) => (
+          <tr key={index}>
+            <td>{detail.artist || 'N/A'}</td>
+            <td>{detail.album || 'N/A'}</td>
+            <td>{detail.albumDescription || 'N/A'}</td>
+            <td dangerouslySetInnerHTML={{ __html: detail.songTitles || 'N/A' }} />
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
