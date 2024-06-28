@@ -8,6 +8,10 @@ CORS(app)
 with open('data.json', 'r') as f:
     data = json.load(f)
 
+@app.route('/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "up"}), 200
+
 @app.route('/api/suggestions', methods=['GET'])
 def get_suggestions():
     query = request.args.get('query', '')
