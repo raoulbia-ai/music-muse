@@ -102,7 +102,7 @@ const SearchBox = () => {
         onKeyDown={handleKeyDown}
         onFocus={handleFocus}
         className="search-input"
-        placeholder="Type to Search by artist..."
+        placeholder="Type to Search by artist...(or Click to see all artists)"
       />
       {suggestions.length > 0 && (
         <ul className="suggestions-list">
