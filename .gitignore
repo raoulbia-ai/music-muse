@@ -25,3 +25,6 @@ yarn-error.log*
 .history
 backend/__pycache__
 frontend/node_modules
+backend/.azure/
+frontend/build/
+
