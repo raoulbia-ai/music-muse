@@ -136,4 +136,8 @@ tr:nth-child(even) {
 .results-table td:nth-child(4) {
   width: 30%; /* Adjust width for song titles */
 }
+.no-artists-found {
+  color: red;
+  margin-top: 10px;
+}
 

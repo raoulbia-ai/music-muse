@@ -8,6 +8,8 @@ const SearchBox = () => {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedSuggestion, setSelectedSuggestion] = useState(-1);
   const [details, setDetails] = useState([]);
+  const [noArtistsFound, setNoArtistsFound] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(false); // New state to control when to show suggestions
 
   // Effect hook to fetch suggestions based on query
   useEffect(() => {
@@ -15,6 +17,7 @@ const SearchBox = () => {
       fetchSuggestions(query);
     } else {
       setSuggestions([]);
+      setNoArtistsFound(false); // Clear no artists found message when query is empty
     }
   }, [query]);
 
@@ -24,6 +27,7 @@ const SearchBox = () => {
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/suggestions?query=${query}`);
       const data = await response.json();
       setSuggestions(data);
+      setNoArtistsFound(data.length === 0); // Show message if no artists found
     } catch (error) {
       console.error('Error fetching suggestions:', error);
     }
@@ -67,13 +71,19 @@ const SearchBox = () => {
   const handleChange = (e) => {
     setQuery(e.target.value);
     setDetails([]); // Clear details when query changes
+    setNoArtistsFound(false); // Hide no artists found message when query changes
+    setShowSuggestions(true); // Show suggestions when user types
   };
 
   // Handles focus event on the search input
   const handleFocus = () => {
-    if (!query) {
-      fetchAllArtists();
-    }
+    fetchAllArtists();
+    setShowSuggestions(true); // Show suggestions when input is focused
+  };
+
+  // Handles blur event on the search input to hide suggestions
+  const handleBlur = () => {
+    setTimeout(() => setShowSuggestions(false), 100); // Delay to allow click event to register
   };
 
   // Handles key down events for navigation and selection
@@ -108,10 +118,12 @@ const SearchBox = () => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         onFocus={handleFocus}
+        onBlur={handleBlur} // Hide suggestions when input loses focus
         className="search-input"
         placeholder="Type to Search by artist...(or Click to see all artists)"
       />
-      {suggestions.length > 0 && (
+      {noArtistsFound && <div className="no-artists-found">No artists found</div>}
+      {showSuggestions && suggestions.length > 0 && (
         <ul className="suggestions-list">
           {suggestions.map((suggestion, index) => (
             <li
