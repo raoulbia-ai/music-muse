@@ -7,7 +7,8 @@ import os
 app = Flask(__name__)
 
 # Enable CORS for all domains on all routes
-CORS(app, resources={r"/*": {"origins": ["https://jolly-sky-0071d7d03.5.azurestaticapps.net"]}})
+CORS(app, resources={r"/*": {"origins": ["https://jolly-sky-0071d7d03.5.azurestaticapps.net",
+                                         "http://localhost:3000"]}})
 
 # Load data from JSON file
 with open('data.json', 'r') as f:
