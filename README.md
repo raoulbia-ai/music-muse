@@ -88,15 +88,22 @@ Once the application is running:
 
 The Music Muse application is deployed to Azure using GitHub Actions. The deployment process is automated for both the frontend and backend components:
 
-1. **Backend Deployment**:
-   - The Flask backend is deployed to Azure Web App.
-   - The deployment is triggered on pushes to the `master` branch that affect the `backend/` directory.
-   - The workflow is defined in `.github/workflows/backend_build_deploy.yml`.
+1. **Create Azure Resources**:
+   - Create a new [Azure Static Web App](https://docs.microsoft.com/en-us/azure/static-web-apps/overview) resource for the React frontend.
+   - Create a new [Azure Web App](https://docs.microsoft.com/en-us/azure/app-service/overview) resource for the Flask backend.
 
-2. **Frontend Deployment**:
-   - The React frontend is deployed to Azure Blob Storage.
-   - The deployment is triggered on pushes to the `master` branch that affect the `frontend/` directory.
-   - The workflow is defined in `.github/workflows/frontend_build_deploy.yml`.
+2. **Configure Frontend Deployment**:
+   - In the Azure portal, connect your Static Web App to your GitHub repository.
+   - Set the build configuration to use the `frontend` directory and the `build` output directory.
+
+3. **Configure Backend Deployment**:
+   - In the Azure portal, go to the Web App's Configuration settings.
+   - Set the Startup Command to `gunicorn --bind=0.0.0.0 --timeout 600 app:app`.
+
+
+4. **Deploy the Application**:
+   - Push your code changes to the connected GitHub repository.
+   - Azure will automatically build and deploy your frontend and backend based on the configured settings.
 
 For more details on the deployment process, refer to the workflow files in the `.github/workflows/` directory.
 
