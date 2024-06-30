@@ -16,35 +16,35 @@ const SearchBox = () => {
   }, [query]);
 
   const fetchSuggestions = async (query) => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/suggestions?query=${query}`);
-      const data = await response.json();
-      setSuggestions(data);
-    } catch (error) {
-      console.error('Error fetching suggestions:', error);
-    }
-  };
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/suggestions?query=${query}`);
+    const data = await response.json();
+    setSuggestions(data);
+  } catch (error) {
+    console.error('Error fetching suggestions:', error);
+  }
+};
 
-  const fetchAllArtists = async () => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/all_artists`);
-      const data = await response.json();
-      setSuggestions(data);
-    } catch (error) {
-      console.error('Error fetching all artists:', error);
-    }
-  };
+const fetchAllArtists = async () => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/all_artists`);
+    const data = await response.json();
+    setSuggestions(data);
+  } catch (error) {
+    console.error('Error fetching all artists:', error);
+  }
+};
 
-  const fetchDetails = async (query) => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/details?query=${query}`);
-      const data = await response.json();
-      const formattedData = formatData(data);
-      setDetails(formattedData);
-    } catch (error) {
-      console.error('Error fetching details:', error);
-    }
-  };
+const fetchDetails = async (query) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/details?query=${query}`);
+    const data = await response.json();
+    const formattedData = formatData(data);
+    setDetails(formattedData);
+  } catch (error) {
+    console.error('Error fetching details:', error);
+  }
+};
 
   const formatData = (artistData) => {
     if (!artistData.albums) return [];
