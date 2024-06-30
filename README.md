@@ -1,5 +1,3 @@
-Here's the updated README file with information about Conda as a prerequisite and instructions for creating and activating a Conda environment before installing requirements:
-
 # Music Muse
 
 ## Introduction
@@ -20,6 +18,7 @@ The application is structured into two main components:
   - [Steps](#steps)
 - [Usage](#usage)
 - [Deployment to Azure](#deployment-to-azure)
+- [Environment Variables](#environment-variables)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -87,42 +86,42 @@ Once the application is running:
 
 ## Deployment to Azure
 
-To deploy the Music Muse application to Azure, follow these steps:
+The Music Muse application is deployed to Azure using GitHub Actions. The deployment process is automated for both the frontend and backend components:
 
-1. **Create Azure Resources**:
-   - Create a new [Azure Static Web App](https://docs.microsoft.com/en-us/azure/static-web-apps/overview) resource for the React frontend.
-   - Create a new [Azure Web App](https://docs.microsoft.com/en-us/azure/app-service/overview) resource for the Flask backend.
+1. **Backend Deployment**:
+   - The Flask backend is deployed to Azure Web App.
+   - The deployment is triggered on pushes to the `master` branch that affect the `backend/` directory.
+   - The workflow is defined in `.github/workflows/backend_build_deploy.yml`.
 
-2. **Configure Frontend Deployment**:
-   - In the Azure portal, connect your Static Web App to your GitHub repository.
-   - Set the build configuration to use the `frontend` directory and the `build` output directory.
+2. **Frontend Deployment**:
+   - The React frontend is deployed to Azure Blob Storage.
+   - The deployment is triggered on pushes to the `master` branch that affect the `frontend/` directory.
+   - The workflow is defined in `.github/workflows/frontend_build_deploy.yml`.
 
-3. **Configure Backend Deployment**:
-   - In the Azure portal, go to the Web App's Configuration settings.
-   - Set the Startup Command to `python app.py`.
-   - Enable CORS and allow requests from your frontend's Azure URL.
+For more details on the deployment process, refer to the workflow files in the `.github/workflows/` directory.
 
-4. **Set Environment Variables**:
-   - In the Azure portal, configure the necessary environment variables for your backend, such as database connection strings or API keys.
+## Environment Variables
 
-5. **Deploy the Application**:
-   - Push your code changes to the connected GitHub repository.
-   - Azure will automatically build and deploy your frontend and backend based on the configured settings.
+The application uses environment variables to manage configuration. We use `.env.development` for local development and `.env.production` for production deployment. These files are not committed to the repository for security reasons.
 
-For detailed instructions and more deployment options, refer to the [Azure Static Web Apps documentation](https://docs.microsoft.com/en-us/azure/static-web-apps/) and [Azure App Service documentation](https://docs.microsoft.com/en-us/azure/app-service/).
+To set up your environment:
+
+1. Copy the `.env.example` file in the root directory.
+2. Rename it to `.env.development` for local development or `.env.production` for production use.
+3. Fill in the appropriate values for each environment variable.
+
+The key environment variable used is:
+
+- `REACT_APP_API_BASE_URL`: Set to `http://localhost:5000` for local development and `https://<your-application-name>.azurewebsites.net` for production.
 
 ## Contributing
 
 Contributions are welcome! If you'd like to contribute to the Music Muse project, please follow these steps:
 
 1. Fork the repository.
-
 2. Create a new branch for your feature or bug fix.
-
 3. Make your changes and commit them with descriptive messages.
-
 4. Push your changes to your forked repository.
-
 5. Submit a pull request to the main repository.
 
 Please ensure your code follows the project's coding conventions and includes appropriate tests.
