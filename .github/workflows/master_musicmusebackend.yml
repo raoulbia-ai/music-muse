@@ -28,21 +28,18 @@ jobs:
           source venv/bin/activate
       
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
         working-directory: ./backend
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-
-      - name: Zip artifact for deployment
-        run: zip release.zip ./backend/* -r
-
+      
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-app
-          path: |
-            release.zip
-            !venv/
+          path: ./backend
 
   deploy:
     runs-on: ubuntu-latest
@@ -50,31 +47,19 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: python-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip -d backend
-
-      
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D78E261DC4B045FB9CF079304E3DC87C }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_B1DE7ABF94DC41A08709B5751CF781E4 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8EE81BE3930041E2812041B454A7BA2C }}
+          path: ./backend
 
       - name: 'Deploy to Azure Web App'
-        uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 'musicmusebackend'
           slot-name: 'Production'
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: ./backend
-          
