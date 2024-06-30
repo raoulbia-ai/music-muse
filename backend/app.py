@@ -3,7 +3,7 @@ from flask_cors import CORS
 import json
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": ["https://jolly-sky-0071d7d03.5.azurestaticapps.net"]}})
 
 with open('data.json', 'r') as f:
     data = json.load(f)
