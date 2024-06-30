@@ -14,7 +14,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-backend": "cd ../backend/app && flask run"
+    "start-backend": "cd ../backend/app && python app.py"
   },
   "eslintConfig": {
     "extends": [
