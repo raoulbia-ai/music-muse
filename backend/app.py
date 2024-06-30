@@ -9,9 +9,13 @@ CORS(app, resources={r"/*": {"origins": ["https://jolly-sky-0071d7d03.5.azuresta
 with open('data.json', 'r') as f:
     data = json.load(f)
 
+@app.route('/', methods=['GET'])
+def root():
+    return jsonify({"message": "Welcome to the application!"}), 200
+
 @app.route('/health', methods=['GET'])
 def health_check():
-    return jsonify({"status": "up"}), 200
+    return jsonify({"Application status": "up and running"}), 200
 
 @app.route('/api/suggestions', methods=['GET'])
 def get_suggestions():
