@@ -54,14 +54,14 @@ Before setting up the project, ensure you have the following installed on your s
     ```
 
 4. **Start the application**:
-    You can start both the frontend and backend with a single command from the `frontend` directory.
+    To run the frontend, use the following command in the `frontend` directory:
     ```sh
     npm start
     ```
 
-    To run the backend separately, use the following command in the `backend` directory:
+    To run the backend, use the following command in the `backend` directory:
     ```sh
-    flask run
+    python app.py
     ```
 
 Now, your Music Muse application should be up and running. Enjoy exploring your favorite artist's albums and songs with ease!
