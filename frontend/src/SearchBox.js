@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './index.css';
 
+// Defines a search box component
 const SearchBox = () => {
+  // State hooks for managing component state
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
   const [selectedSuggestion, setSelectedSuggestion] = useState(-1);
   const [details, setDetails] = useState([]);
 
+  // Effect hook to fetch suggestions based on query
   useEffect(() => {
     if (query.length > 0) {
       fetchSuggestions(query);
@@ -15,63 +18,65 @@ const SearchBox = () => {
     }
   }, [query]);
 
+  // Fetches suggestions from the API
   const fetchSuggestions = async (query) => {
-  try {
-    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/suggestions?query=${query}`);
-    const data = await response.json();
-    setSuggestions(data);
-  } catch (error) {
-    console.error('Error fetching suggestions:', error);
-  }
-};
-
-const fetchAllArtists = async () => {
-  try {
-    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/all_artists`);
-    const data = await response.json();
-    setSuggestions(data);
-  } catch (error) {
-    console.error('Error fetching all artists:', error);
-  }
-};
-
-const fetchDetails = async (query) => {
-  try {
-    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/details?query=${query}`);
-    const data = await response.json();
-    const formattedData = formatData(data);
-    setDetails(formattedData);
-  } catch (error) {
-    console.error('Error fetching details:', error);
-  }
-};
-
-  const formatData = (artistData) => {
-    if (!artistData.albums) return [];
-    const results = [];
-    artistData.albums.forEach(album => {
-      const songList = album.songs.map(song => `<li>${song.title} (${song.length})</li>`).join('');
-      results.push({
-        artist: artistData.name,
-        album: album.title,
-        albumDescription: album.description,
-        songTitles: `<ul>${songList}</ul>`,
-      });
-    });
-    return results;
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/suggestions?query=${query}`);
+      const data = await response.json();
+      setSuggestions(data);
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+    }
   };
 
+  // Fetches all artists from the API
+  const fetchAllArtists = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/all_artists`);
+      const data = await response.json();
+      setSuggestions(data);
+    } catch (error) {
+      console.error('Error fetching all artists:', error);
+    }
+  };
+
+  // Fetches details for a specific query from the API
+  const fetchDetails = async (query) => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/details?query=${query}`);
+      const data = await response.json();
+      const formattedData = formatData(data);
+      setDetails(formattedData);
+    } catch (error) {
+      console.error('Error fetching details:', error);
+    }
+  };
+
+  // Formats the data received from the API
+  const formatData = (artistData) => {
+    if (!artistData.albums) return [];
+    return artistData.albums.map(album => ({
+      artist: artistData.name,
+      album: album.title,
+      albumDescription: album.description,
+      songTitles: `<ul>${album.songs.map(song => `<li>${song.title} (${song.length})</li>`).join('')}</ul>`,
+    }));
+  };
+
+  // Handles changes to the search input
   const handleChange = (e) => {
     setQuery(e.target.value);
     setDetails([]); // Clear details when query changes
   };
 
+  // Handles focus event on the search input
   const handleFocus = () => {
     if (!query) {
       fetchAllArtists();
     }
   };
 
+  // Handles key down events for navigation and selection
   const handleKeyDown = (e) => {
     if (e.key === 'ArrowDown') {
       setSelectedSuggestion((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev));
@@ -86,6 +91,7 @@ const fetchDetails = async (query) => {
     }
   };
 
+  // Handles click events on suggestions
   const handleSuggestionClick = (suggestion) => {
     setQuery('');
     setSuggestions([]);
@@ -93,6 +99,7 @@ const fetchDetails = async (query) => {
     fetchDetails(suggestion);
   };
 
+  // Renders the search box component
   return (
     <div className="search-box">
       <input
@@ -126,6 +133,7 @@ const fetchDetails = async (query) => {
   );
 };
 
+// Defines a component for displaying search results in a table
 const ResultsTable = ({ details }) => {
   return (
     <table className="results-table">
