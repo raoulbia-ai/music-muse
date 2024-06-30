@@ -1,4 +1,4 @@
-Here's the updated README file with a new section on Deployment to Azure, and all URLs converted to clickable Markdown links:
+Here's the updated README file with information about Conda as a prerequisite and instructions for creating and activating a Conda environment before installing requirements:
 
 # Music Muse
 
@@ -30,6 +30,7 @@ The application is structured into two main components:
 Before setting up the project, ensure you have the following installed on your system:
 - Node.js and npm (Node Package Manager)
 - Python 3 and pip (Python Package Installer)
+- Conda (Anaconda or Miniconda)
 
 ### Steps
 
@@ -39,29 +40,35 @@ Before setting up the project, ensure you have the following installed on your s
     git clone https://github.com/raoulbia-ai/music-muse.git
     ```
 
-2. **Set up the frontend**:
+2. **Create and activate a Conda environment**:
+    ```sh
+    conda create --name music-muse python=3.8
+    conda activate music-muse
+    ```
+
+3. **Set up the frontend**:
     Navigate to the `frontend` directory and install the dependencies.
     ```sh
     cd frontend
     npm install
     ```
 
-3. **Set up the backend**:
+4. **Set up the backend**:
     Move to the `backend` directory and install the required Python packages.
     ```sh
     cd ../backend
     pip install -r requirements.txt
     ```
 
-4. **Start the application**:
-    To run the frontend, use the following command in the `frontend` directory:
+5. **Start the application**:
+    You can start both the frontend and backend with a single command from the `frontend` directory.
     ```sh
     npm start
     ```
 
-    To run the backend, use the following command in the `backend` directory:
+    To run the backend separately, use the following command in the `backend` directory:
     ```sh
-    python app.py
+    flask run
     ```
 
 Now, your Music Muse application should be up and running. Enjoy exploring your favorite artist's albums and songs with ease!
