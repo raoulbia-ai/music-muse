@@ -22,9 +22,6 @@ jobs:
         with:
           python-version: '3.8'
 
-      - name: Change to backend directory
-        run: cd backend
-
       - name: Create and start virtual environment
         run: |
           python -m venv venv
@@ -32,6 +29,7 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
+        working-directory: ./backend
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
