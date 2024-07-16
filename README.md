@@ -156,17 +156,17 @@ This project includes a RESTful API implemented in `backend/app.py`. This sectio
 #### Frontend Workflow
 
  1 Fetching Suggestions:                                                                                                            
-    • When the user types in the search box, the `fetchSuggestions` function is called.                                               
-    • This function sends a GET request to the /api/suggestions endpoint with the current query.                                    
-    • The suggestions are then displayed in a dropdown list.                                                                        
+   • When the user types in the search box, the `fetchSuggestions` function is called.                                               
+   • This function sends a GET request to the /api/suggestions endpoint with the current query.                                    
+   • The suggestions are then displayed in a dropdown list.                                                                        
  2 Fetching All Artists:                                                                                                            
-    • When the search input is focused (*), the `fetchAllArtists` function is called.                                                     
-    • This function sends a GET request to the /api/all_artists endpoint.                                                           
-    • All artist names are displayed in the dropdown list.                                                                          
+   • When the search input is focused (*), the `fetchAllArtists` function is called.                                                     
+   • This function sends a GET request to the /api/all_artists endpoint.                                                           
+   • All artist names are displayed in the dropdown list.                                                                          
  3 Fetching Details:                                                                                                                
-    • When a suggestion is clicked or selected using the keyboard, the `fetchDetails` function is called.                             
-    • This function sends a GET request to the /api/details endpoint with the selected artist name.                                 
-    • The detailed information about the artist is then displayed.  
+   • When a suggestion is clicked or selected using the keyboard, the `fetchDetails` function is called.                             
+   • This function sends a GET request to the /api/details endpoint with the selected artist name.                                 
+   • The detailed information about the artist is then displayed.  
 
 
 (*) the event that occurs when the user clicks on or tabs into the search input field,    
