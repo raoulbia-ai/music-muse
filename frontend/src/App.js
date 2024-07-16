@@ -1,11 +1,17 @@
-// Import React and useState hook from 'react'
+/**
+ * Main App component
+ * This component renders the main application interface.
+ */
 import React, { useState } from 'react';
 // Import the SearchBox component
 import SearchBox from './SearchBox';
 // Import stylesheet for the App component
 import './index.css';
 
-// Defines the main App component
+/**
+ * App component
+ * @returns {JSX.Element} The rendered component.
+ */
 const App = () => {
   // State hook for storing details of the selected item
   const [details, setDetails] = useState(null);
@@ -43,5 +49,7 @@ const App = () => {
   );
 };
 
-// Export the App component for use in other parts of the application
+/**
+ * Export the App component
+ */
 export default App;

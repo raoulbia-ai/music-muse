@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
+/**
+ * SearchBox component
+ * This component provides a search box for querying artists.
+ */
 import './index.css';
 
-// Defines a search box component
+/**
+ * SearchBox component
+ * @returns {JSX.Element} The rendered component.
+ */
 const SearchBox = () => {
   // State hooks for managing component state
   const [query, setQuery] = useState('');
@@ -21,7 +27,10 @@ const SearchBox = () => {
     }
   }, [query]);
 
-  // Fetches suggestions from the API
+  /**
+   * Fetch suggestions from the API
+   * @param {string} query - The search query.
+   */
   const fetchSuggestions = async (query) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/suggestions?query=${query}`);
@@ -33,7 +42,9 @@ const SearchBox = () => {
     }
   };
 
-  // Fetches all artists from the API
+  /**
+   * Fetch all artists from the API
+   */
   const fetchAllArtists = async () => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/all_artists`);
@@ -44,7 +55,10 @@ const SearchBox = () => {
     }
   };
 
-  // Fetches details for a specific query from the API
+  /**
+   * Fetch details for a specific query from the API
+   * @param {string} query - The search query.
+   */
   const fetchDetails = async (query) => {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/details?query=${query}`);
@@ -56,7 +70,11 @@ const SearchBox = () => {
     }
   };
 
-  // Formats the data received from the API
+  /**
+   * Format the data received from the API
+   * @param {object} artistData - The artist data.
+   * @returns {array} The formatted data.
+   */
   const formatData = (artistData) => {
     if (!artistData.albums) return [];
     return artistData.albums.map(album => ({
@@ -67,7 +85,10 @@ const SearchBox = () => {
     }));
   };
 
-  // Handles changes to the search input
+  /**
+   * Handle changes to the search input
+   * @param {object} e - The event object.
+   */
   const handleChange = (e) => {
     setQuery(e.target.value);
     setDetails([]); // Clear details when query changes
@@ -75,18 +96,25 @@ const SearchBox = () => {
     setShowSuggestions(true); // Show suggestions when user types
   };
 
-  // Handles focus event on the search input
+  /**
+   * Handle focus event on the search input
+   */
   const handleFocus = () => {
     fetchAllArtists();
     setShowSuggestions(true); // Show suggestions when input is focused
   };
 
-  // Handles blur event on the search input to hide suggestions
+  /**
+   * Handle blur event on the search input to hide suggestions
+   */
   const handleBlur = () => {
     setTimeout(() => setShowSuggestions(false), 100); // Delay to allow click event to register
   };
 
-  // Handles key down events for navigation and selection
+  /**
+   * Handle key down events for navigation and selection
+   * @param {object} e - The event object.
+   */
   const handleKeyDown = (e) => {
     if (e.key === 'ArrowDown') {
       setSelectedSuggestion((prev) => (prev < suggestions.length - 1 ? prev + 1 : prev));
@@ -101,7 +129,10 @@ const SearchBox = () => {
     }
   };
 
-  // Handles click events on suggestions
+  /**
+   * Handle click events on suggestions
+   * @param {string} suggestion - The selected suggestion.
+   */
   const handleSuggestionClick = (suggestion) => {
     setQuery('');
     setSuggestions([]);
@@ -109,7 +140,10 @@ const SearchBox = () => {
     fetchDetails(suggestion);
   };
 
-  // Renders the search box component
+  /**
+   * Render the search box component
+   * @returns {JSX.Element} The rendered component.
+   */
   return (
     <div className="search-box">
       <input
@@ -145,7 +179,11 @@ const SearchBox = () => {
   );
 };
 
-// Defines a component for displaying search results in a table
+/**
+ * ResultsTable component
+ * @param {array} details - The details to display.
+ * @returns {JSX.Element} The rendered component.
+ */
 const ResultsTable = ({ details }) => {
   return (
     <table className="results-table">

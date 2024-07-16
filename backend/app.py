@@ -3,7 +3,7 @@ from flask_cors import CORS
 import json
 import os
 
-# Initialize Flask app
+# Import necessary libraries
 app = Flask(__name__)
 
 # Enable CORS for all domains on all routes
@@ -14,16 +14,19 @@ CORS(app, resources={r"/*": {"origins": ["https://jolly-sky-0071d7d03.5.azuresta
 with open('data.json', 'r') as f:
     data = json.load(f)
 
+# Define the root endpoint
 @app.route('/', methods=['GET'])
 def root():
     """Root endpoint returning a welcome message."""
     return jsonify({"message": "Welcome to the application!"}), 200
 
+# Define the health check endpoint
 @app.route('/health', methods=['GET'])
 def health_check():
     """Health check endpoint to indicate the application is up and running."""
     return jsonify({"Application status": "up and running"}), 200
 
+# Define the suggestions endpoint
 @app.route('/api/suggestions', methods=['GET'])
 def get_suggestions():
     """Endpoint to get artist suggestions based on a query."""
@@ -31,12 +34,14 @@ def get_suggestions():
     suggestions = [artist['name'] for artist in data if query.lower() in artist['name'].lower()]
     return jsonify(suggestions)
 
+# Define the all artists endpoint
 @app.route('/api/all_artists', methods=['GET'])
 def get_all_artists():
     """Endpoint to get a sorted list of all artists."""
     artists = sorted(artist['name'] for artist in data)
     return jsonify(artists)
 
+# Define the details endpoint
 @app.route('/api/details', methods=['GET'])
 def get_details():
     """Endpoint to get details of an artist based on a query."""
@@ -44,6 +49,7 @@ def get_details():
     details = next((artist for artist in data if query.lower() == artist['name'].lower()), {})
     return jsonify(details)
 
+# Run the Flask app
 if __name__ == "__main__":
     # Run the Flask app on port from environment or default to 5000
     port = int(os.environ.get('PORT', 5000))

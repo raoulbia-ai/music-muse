@@ -136,3 +136,33 @@ Please ensure your code follows the project's coding conventions and includes ap
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/license/MIT).
+## Technical Assessment Presentation
+
+### Overview
+This repository was created for a technical assessment test for a Fullstack Engineer role. The main files of interest are in the `backend` and `frontend/src` directories.
+
+### Backend
+- **app.py**: This file contains the Flask application with endpoints for fetching artist suggestions, all artists, and details of a specific artist.
+
+### Frontend
+- **App.js**: This file contains the main React component that renders the application interface.
+- **SearchBox.js**: This file contains the SearchBox component that provides a search box for querying artists and displaying results.
+
+### Key Features
+1. **Search Functionality**: Users can search for artists and get suggestions as they type.
+2. **Artist Details**: Users can view detailed information about an artist, including albums and songs.
+3. **Responsive Design**: The application is designed to be responsive and user-friendly.
+
+### How to Run
+1. **Backend**: Navigate to the `backend` directory and run `python app.py`.
+2. **Frontend**: Navigate to the `frontend` directory and run `npm start`.
+
+### Discussion Points
+1. **Architecture**: Explain the overall architecture of the application, including the separation of backend and frontend.
+2. **Endpoints**: Discuss the different endpoints in the backend and their purposes.
+3. **Components**: Explain the key components in the frontend and how they interact.
+4. **State Management**: Discuss how state is managed in the frontend using React hooks.
+5. **Error Handling**: Explain how errors are handled in both the backend and frontend.
+
+### Conclusion
+This application demonstrates the ability to create a fullstack application with a Flask backend and a React frontend. It showcases skills in API development, state management, and responsive design.
