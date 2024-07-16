@@ -231,3 +231,55 @@ This repository was created for a technical assessment test for a Fullstack Engi
 
 ### Conclusion
 This application demonstrates the ability to create a fullstack application with a Flask backend and a React frontend. It showcases skills in API development, state management, responsive design, and testing.
+## RESTful API Overview
+
+This project includes a RESTful API implemented in `backend/app.py`. This section provides an educational overview of what makes an API RESTful and how the endpoints in this project adhere to these principles.
+
+### Characteristics of a RESTful API
+
+1. **Stateless**: Each request from a client to the server must contain all the information the server needs to fulfill that request. The server does not store any client context between requests. In `backend/app.py`, each endpoint processes requests independently without relying on any stored context.
+
+2. **Client-Server Architecture**: The client and server are separate entities. The client makes requests to the server, and the server processes these requests and returns the appropriate responses. In this case, the frontend (client) makes HTTP requests to the backend (server) endpoints.
+
+3. **Uniform Interface**: The API follows a consistent and uniform interface. Each endpoint in `backend/app.py` has a clear purpose and returns data in a consistent format (JSON).
+
+4. **Resource-Based**: The API is designed around resources, which are identified by URLs. In `backend/app.py`, resources like artist suggestions, all artists, and artist details are accessed via specific endpoints (`/api/suggestions`, `/api/all_artists`, `/api/details`).
+
+5. **HTTP Methods**: RESTful APIs use standard HTTP methods (GET, POST, PUT, DELETE) to perform operations on resources. In `backend/app.py`, the endpoints use the GET method to retrieve data.
+
+### Endpoints in `backend/app.py`
+
+- **Endpoint `/api/suggestions`**:
+  - **Resource**: Artist suggestions based on a query.
+  - **HTTP Method**: GET.
+  - **URL**: `/api/suggestions`.
+  - **Response**: JSON array of artist names.
+
+- **Endpoint `/api/all_artists`**:
+  - **Resource**: All artist names.
+  - **HTTP Method**: GET.
+  - **URL**: `/api/all_artists`.
+  - **Response**: JSON array of all artist names.
+
+- **Endpoint `/api/details`**:
+  - **Resource**: Detailed information about an artist.
+  - **HTTP Method**: GET.
+  - **URL**: `/api/details`.
+  - **Response**: JSON object with artist details.
+
+### Interaction Flow
+
+1. **User Interaction**:
+   - User types in the search box.
+   - `fetchSuggestions` is called, and suggestions are displayed.
+   - User can navigate suggestions using the keyboard or click on a suggestion.
+
+2. **Fetching All Artists**:
+   - User focuses on the search input.
+   - `fetchAllArtists` is called, and all artist names are displayed.
+
+3. **Fetching Details**:
+   - User selects a suggestion.
+   - `fetchDetails` is called, and detailed information about the artist is displayed.
+
+This interaction ensures that the frontend dynamically updates based on user input and provides relevant information by communicating with the backend endpoints.
