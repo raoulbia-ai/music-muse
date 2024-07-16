@@ -144,9 +144,21 @@ This repository was created for a technical assessment test for a Fullstack Engi
 ### Backend
 - **app.py**: This file contains the Flask application with endpoints for fetching artist suggestions, all artists, and details of a specific artist.
 
+#### Endpoints
+1. **Root Endpoint (`/`)**: Returns a welcome message.
+2. **Health Check Endpoint (`/health`)**: Indicates the application is up and running.
+3. **Suggestions Endpoint (`/api/suggestions`)**: Returns artist suggestions based on a query.
+4. **All Artists Endpoint (`/api/all_artists`)**: Returns a sorted list of all artists.
+5. **Details Endpoint (`/api/details`)**: Returns details of an artist based on a query.
+
 ### Frontend
 - **App.js**: This file contains the main React component that renders the application interface.
 - **SearchBox.js**: This file contains the SearchBox component that provides a search box for querying artists and displaying results.
+
+#### Components
+1. **App Component**: Manages the overall layout and state of the application.
+2. **SearchBox Component**: Handles user input, fetches suggestions, and displays artist details.
+3. **ResultsTable Component**: Displays the details of the selected artist in a tabular format.
 
 ### Key Features
 1. **Search Functionality**: Users can search for artists and get suggestions as they type.
@@ -154,8 +166,18 @@ This repository was created for a technical assessment test for a Fullstack Engi
 3. **Responsive Design**: The application is designed to be responsive and user-friendly.
 
 ### How to Run
-1. **Backend**: Navigate to the `backend` directory and run `python app.py`.
+1. **Backend**: Navigate to the `backend` directory and run `flask run`.
 2. **Frontend**: Navigate to the `frontend` directory and run `npm start`.
+
+### Testing
+1. **Backend Testing**: Use tools like Postman to test the API endpoints.
+2. **Frontend Testing**: Use React Testing Library and Jest to test the components.
+
+### Future Improvements
+1. **Enhanced Error Handling**: Improve error handling in both backend and frontend.
+2. **Pagination**: Implement pagination for artist suggestions and details.
+3. **Caching**: Add caching mechanisms to improve performance.
+4. **User Authentication**: Implement user authentication and authorization.
 
 ### Discussion Points
 1. **Architecture**: Explain the overall architecture of the application, including the separation of backend and frontend.
@@ -163,6 +185,8 @@ This repository was created for a technical assessment test for a Fullstack Engi
 3. **Components**: Explain the key components in the frontend and how they interact.
 4. **State Management**: Discuss how state is managed in the frontend using React hooks.
 5. **Error Handling**: Explain how errors are handled in both the backend and frontend.
+6. **Testing**: Discuss the testing strategies used for both backend and frontend.
+7. **Future Improvements**: Highlight potential areas for future enhancements.
 
 ### Conclusion
-This application demonstrates the ability to create a fullstack application with a Flask backend and a React frontend. It showcases skills in API development, state management, and responsive design.
+This application demonstrates the ability to create a fullstack application with a Flask backend and a React frontend. It showcases skills in API development, state management, responsive design, and testing.
