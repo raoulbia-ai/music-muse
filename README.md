@@ -185,6 +185,8 @@ This repository was created for a technical assessment test for a Fullstack Engi
    - **Frontend**: Built with React, the frontend provides a dynamic and responsive user interface. It communicates with the backend via RESTful API calls.
    - **Backend**: Developed using Flask, the backend handles API requests, processes data, and serves responses. It reads data from a JSON file and provides endpoints for artist suggestions, all artists, and artist details.
    - **Communication**: The frontend and backend communicate over HTTP, with the frontend making asynchronous requests to the backend endpoints.
+   - **Detailed Diagram**: Include a detailed architecture diagram showing the interaction between the frontend, backend, and any external services.
+   - **Technology Stack**: Provide a detailed explanation of the technology stack used, including the reasons for choosing React and Flask.
 
 2. **Endpoints**:
    - **Root Endpoint (`/`)**: Returns a welcome message to indicate the API is accessible.
@@ -192,16 +194,22 @@ This repository was created for a technical assessment test for a Fullstack Engi
    - **Suggestions Endpoint (`/api/suggestions`)**: Accepts a query parameter and returns a list of artist names that match the query.
    - **All Artists Endpoint (`/api/all_artists`)**: Returns a sorted list of all artist names available in the dataset.
    - **Details Endpoint (`/api/details`)**: Accepts a query parameter and returns detailed information about the specified artist, including albums and songs.
+   - **Endpoint Documentation**: Create detailed documentation for each endpoint, including request and response examples.
+   - **Error Responses**: Document the possible error responses for each endpoint and how they are handled.
 
 3. **Components**:
    - **App Component**: The main component that manages the overall layout and state of the application. It includes the search box and results table.
    - **SearchBox Component**: Handles user input for searching artists. It fetches suggestions and artist details from the backend and updates the state accordingly.
    - **ResultsTable Component**: Displays the details of the selected artist, including albums and songs, in a tabular format.
+   - **Component Hierarchy**: Include a component hierarchy diagram to show the structure and relationships between components.
+   - **Component Responsibilities**: Provide a detailed explanation of the responsibilities of each component.
 
 4. **State Management**:
    - **React Hooks**: The application uses React hooks (`useState`, `useEffect`) to manage state and side effects.
    - **State Variables**: Key state variables include `query` (search input), `suggestions` (list of artist suggestions), `details` (selected artist details), and `selectedSuggestion` (index of the currently highlighted suggestion).
    - **State Updates**: State is updated based on user interactions (e.g., typing in the search box, selecting a suggestion) and API responses.
+   - **State Flow**: Include a diagram showing the flow of state within the application.
+   - **State Variables**: Provide a detailed explanation of each state variable and its purpose.
 
 5. **Error Handling**:
    - **Backend**: Errors in the backend are logged, and appropriate HTTP status codes are returned to the frontend.
@@ -218,6 +226,8 @@ This repository was created for a technical assessment test for a Fullstack Engi
    - **User Authentication**: Implement user authentication and authorization to provide personalized experiences and secure access to certain features.
    - **Performance Optimization**: Optimize the performance of both the frontend and backend to ensure a smooth user experience, especially under high load conditions.
    - **Additional Features**: Add more features such as user playlists, favorite artists, and integration with external music APIs for richer data.
+   - **Detailed Roadmap**: Create a detailed roadmap for future improvements, including timelines and priorities.
+   - **Technical Debt**: Identify any technical debt and propose solutions for addressing it.
 
 ### Conclusion
 This application demonstrates the ability to create a fullstack application with a Flask backend and a React frontend. It showcases skills in API development, state management, responsive design, and testing.
