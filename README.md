@@ -161,9 +161,9 @@ This repository was created for a technical assessment test for a Fullstack Engi
 3. **ResultsTable Component**: Displays the details of the selected artist in a tabular format.
 
 ### Key Features
-1. **Search Functionality**: Users can search for artists and get suggestions as they type.
-2. **Artist Details**: Users can view detailed information about an artist, including albums and songs.
-3. **Responsive Design**: The application is designed to be responsive and user-friendly.
+1. **Autocomplete Search Functionality**: As users type in the search box, the application provides real-time autocomplete suggestions for artist names. This feature enhances the user experience by making it faster and easier to find the desired artist.
+2. **Artist Details**: Users can view detailed information about an artist, including albums and songs, by selecting an artist from the autocomplete suggestions.
+3. **Responsive Design**: The application is designed to be responsive and user-friendly, ensuring a seamless experience across different devices and screen sizes.
 
 ### How to Run
 1. **Backend**: Navigate to the `backend` directory and run `flask run`.
