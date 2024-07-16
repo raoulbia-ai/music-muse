@@ -153,6 +153,93 @@ This project includes a RESTful API implemented in `backend/app.py`. This sectio
    - SearchBox.js: This script contains the SearchBox component that provides a search box for querying artists and displaying results.
 4. **ResultsTable Component**: Displays the details of the selected artist in a tabular format.
 
+#### Frontend Workflow
+
+ 1 Fetching Suggestions:                                                                                                            
+    • When the user types in the search box, the `fetchSuggestions` function is called.                                               
+    • This function sends a GET request to the /api/suggestions endpoint with the current query.                                    
+    • The suggestions are then displayed in a dropdown list.                                                                        
+ 2 Fetching All Artists:                                                                                                            
+    • When the search input is focused (*), the `fetchAllArtists` function is called.                                                     
+    • This function sends a GET request to the /api/all_artists endpoint.                                                           
+    • All artist names are displayed in the dropdown list.                                                                          
+ 3 Fetching Details:                                                                                                                
+    • When a suggestion is clicked or selected using the keyboard, the `fetchDetails` function is called.                             
+    • This function sends a GET request to the /api/details endpoint with the selected artist name.                                 
+    • The detailed information about the artist is then displayed.  
+
+
+(*) the event that occurs when the user clicks on or tabs into the search input field,    
+making it active and ready to receive input. In the context of the SearchBox component, this is handled by the handleFocus function,
+which is triggered by the onFocus event of the input element.  
+
+#### SearchBox.js
+
+Here is the relevant part of the SearchBox component:                                                                               
+```                                                                                                                              
+ <input                                                                                                                             
+   type="text"                                                                                                                      
+   value={query}                                                                                                                    
+   onChange={handleChange}                                                                                                          
+   onKeyDown={handleKeyDown}                                                                                                        
+   onFocus={handleFocus}                                                                                                            
+   onBlur={handleBlur} // Hide suggestions when input loses focus                                                                   
+   className="search-input"                                                                                                         
+   placeholder="Type to Search by artist...(or Click to see all artists)"                                                           
+ />
+```                                                                                                                              
+                                                                                                                                    
+The onFocus event is attached to the handleFocus function, which is defined as follows:                                             
+
+```                                                                                                                                
+ /**                                                                                                                                
+  * Handle focus event on the search input                                                                                          
+  */                                                                                                                                
+ const handleFocus = () => {                                                                                                        
+   fetchAllArtists();                                                                                                               
+   setShowSuggestions(true); // Show suggestions when input is focused                                                              
+ };                                                                                                                                 
+```                                                                                                                                    
+
+When the search input field is focused, the handleFocus function is called, which in turn calls the fetchAllArtists function to     
+fetch and display all artist names.
+
+#### Asynchronous Requests
+
+The frontend makes asynchronous requests to the backend endpoints. This can be seen in the `frontend/src/SearchBox.js` file, where the `fetch` API is used to make asynchronous HTTP requests to the backend.
+
+For example, the `fetchSuggestions` function makes an asynchronous GET request to the `/api/suggestions` endpoint:
+
+```javascript
+const fetchSuggestions = async (query) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/suggestions?query=${query}`);
+    const data = await response.json();
+    setSuggestions(data);
+    setNoArtistsFound(data.length === 0); // Show message if no artists found
+  } catch (error) {
+    console.error('Error fetching suggestions:', error);
+  }
+};
+```
+
+Similarly, the `fetchDetails` function makes an asynchronous GET request to the `/api/details` endpoint:
+
+```javascript
+const fetchDetails = async (query) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/details?query=${query}`);
+    const data = await response.json();
+    const formattedData = formatData(data);
+    setDetails(formattedData);
+  } catch (error) {
+    console.error('Error fetching details:', error);
+  }
+};
+```
+
+These functions use the `async` and `await` keywords to handle asynchronous operations, ensuring that the frontend can continue to operate smoothly while waiting for the backend to respond.
+
 
 #### State Management
 
